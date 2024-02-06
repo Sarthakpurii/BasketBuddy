@@ -1,9 +1,11 @@
+import 'package:basketbuddy/screens/form-screen.dart';
 import 'package:basketbuddy/screens/home-screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(MaterialApp(
     theme: ThemeData(
+      brightness: Brightness.dark,
         primaryColor: const Color(0xFF0F0F0F),
         buttonTheme: const ButtonThemeData(
           buttonColor: Color(0xFF008170),
@@ -31,10 +33,12 @@ void main() {
           foregroundColor: Color(0xFF0F0F0F),
         ),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          backgroundColor: Color(0xFFF05941),
+          backgroundColor: Color(0xFF008170),
         ),
       ),
 
-    home: HomeScreen(),));
+    // home: HomeScreen()
+    home:NewItemScreen()
+    ,));
 }
 
