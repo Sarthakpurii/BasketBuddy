@@ -37,8 +37,8 @@ void main() {
         ),
       ),
 
-    // home: HomeScreen()
-    home:NewItemScreen()
+    home: HomeScreen()
+    // home:NewItemScreen()
     ,));
 }
 

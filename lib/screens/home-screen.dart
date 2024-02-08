@@ -1,4 +1,5 @@
 import 'package:basketbuddy/data/dummy_items.dart';
+import 'package:basketbuddy/models/grocery-item.dart';
 import 'package:basketbuddy/screens/form-screen.dart';
 import 'package:basketbuddy/widgets/grocery-list-item.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +12,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  void _addItemScreenSwitcher(){
-    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>NewItemScreen()));
+
+  final List<GroceryItem> groceryData=[];
+
+  void _addItemScreenSwitcher() async{
+    final newGroceryItem=await Navigator.of(context).push<GroceryItem>(MaterialPageRoute(builder: (context)=>NewItemScreen()));
+
+    if (newGroceryItem!=null) groceryData.add(newGroceryItem);
   }
 
   @override
@@ -21,18 +27,16 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('BasketBuddy'),
       ),
-      body: Container(
-        child: ListView.builder(
-            itemCount: groceryItems.length,
-            itemBuilder: (ctx, index) => GroceryListItem(
-                  grocery: groceryItems[index],
-                )),
-      ),
+      body: ListView.builder(
+          itemCount: groceryData.length,
+          itemBuilder: (ctx, index) => GroceryListItem(
+                grocery: groceryData[index],
+              )),
       floatingActionButton: FloatingActionButton(
         onPressed: _addItemScreenSwitcher,
-        child: Icon(Icons.add),
         elevation: 0,
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
+        child: const Icon(Icons.add),
         ),
     );
   }
