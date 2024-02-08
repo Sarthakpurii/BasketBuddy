@@ -1,5 +1,6 @@
 import 'package:basketbuddy/data/categories.dart';
 import 'package:basketbuddy/models/category.dart';
+import 'package:basketbuddy/models/grocery-item.dart';
 import 'package:flutter/material.dart';
 
 class NewItemScreen extends StatefulWidget {
@@ -22,7 +23,7 @@ class NewItemScreenState extends State<NewItemScreen> {
   _submitItem(){
     if (_formKey.currentState!.validate()){
       _formKey.currentState!.save();
-    print(itemDetails['Category'].title);}
+      Navigator.of(context).pop(GroceryItem(name: itemDetails['Title'], quantity: itemDetails['Quantity'], category: itemDetails['Category']));}
   }
 
   @override
@@ -67,7 +68,7 @@ class NewItemScreenState extends State<NewItemScreen> {
                 }
                 return null;
               },
-              onSaved: (newValue) => itemDetails['Quantity']=newValue,
+              onSaved: (newValue) => itemDetails['Quantity']=int.parse(newValue!.trim()),
                     decoration: const InputDecoration(
                       hintText: '1',
                         contentPadding: EdgeInsets.symmetric(horizontal: 5),
