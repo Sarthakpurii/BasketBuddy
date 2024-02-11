@@ -7,6 +7,8 @@ class ShoppingListNotifier extends StateNotifier<Map<String,List<GroceryItem>>>{
   void addItem(String title,GroceryItem item){
     state={...state,title:state[title]!+[item]};
   }
+  
+
 }
 
 final shoppingListProvider=StateNotifierProvider((ref) => ShoppingListNotifier());
