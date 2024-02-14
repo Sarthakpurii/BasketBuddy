@@ -8,4 +8,5 @@ class ShoppingListNotifier extends StateNotifier<Map<String,List<GroceryItem>>>{
   }
 }
 
+
 final shoppingListProvider=StateNotifierProvider((ref) => ShoppingListNotifier());
