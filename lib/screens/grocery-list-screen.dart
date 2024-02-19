@@ -1,17 +1,21 @@
 import 'package:basketbuddy/models/grocery-item.dart';
+import 'package:basketbuddy/navigator/shopping-list-provider.dart';
 import 'package:basketbuddy/screens/form-screen.dart';
 import 'package:basketbuddy/widgets/grocery-list-item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod/riverpod.dart';
 
-class GroceryListScreen extends StatefulWidget {
-  const GroceryListScreen({super.key,required this.groceryData});
-  final List<GroceryItem> groceryData;
+class GroceryListScreen extends ConsumerStatefulWidget {
+  const GroceryListScreen({super.key,required this.title});
+  // final List<GroceryItem> groceryData;
+  final String title;
 
   @override
-  State<GroceryListScreen> createState() => GroceryListScreenState();
+  ConsumerState<GroceryListScreen> createState() => GroceryListScreenState();
 }
 
-class GroceryListScreenState extends State<GroceryListScreen> {
+class GroceryListScreenState extends ConsumerState<GroceryListScreen> {
 
 
   void _addItemScreenSwitcher() async{
@@ -19,24 +23,26 @@ class GroceryListScreenState extends State<GroceryListScreen> {
 
     if (newGroceryItem!=null){
       setState(() {
-        widget.groceryData.add(newGroceryItem);
+        ref.read(shoppingListProvider.notifier).addItem(widget.title, newGroceryItem);
       });
     }
   }
 
   @override
   Widget build(context) {
+    final List<GroceryItem> groceryData=ref.watch(shoppingListProvider)[widget.title]!;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BasketBuddy'),
+        title: Text(widget.title),
       ),
       body: ListView.builder(
-          itemCount: widget.groceryData.length,
+          itemCount: groceryData.length,
           itemBuilder: (ctx, index) => GroceryListItem(
-                grocery: widget.groceryData[index],
+                grocery: groceryData[index],
               )),
       floatingActionButton: FloatingActionButton(
-        onPressed: _addItemScreenSwitcher,
+        onPressed:_addItemScreenSwitcher,
         elevation: 0,
         shape: const CircleBorder(),
         child: const Icon(Icons.add),

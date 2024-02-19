@@ -10,7 +10,7 @@ class ShoppingListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>const GroceryListScreen(groceryData: [],)));
+        Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>GroceryListScreen(title:title)));
       },
       contentPadding: const EdgeInsets.symmetric(vertical: 8,horizontal: 10),
       leading: Image.asset('assets/icons/list.png',scale: 12,color: Colors.white.withOpacity(0.8),),
