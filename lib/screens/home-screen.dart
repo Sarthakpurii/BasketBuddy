@@ -1,21 +1,26 @@
 import 'package:basketbuddy/models/grocery-item.dart';
+import 'package:basketbuddy/models/shopping-item.dart';
+import 'package:basketbuddy/providers/shopping-list-provider.dart';
 import 'package:basketbuddy/widgets/shopping-list-item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
 
-  final Map<String,List<GroceryItem>> shoppingList={'Morning':[],'Tomorrow':[]};
+  // void _addShoppingItemTo
 
   @override
   Widget build(BuildContext context) {
-    final List<String> shoppingListTitle=shoppingList.keys.toList();
+    final Map<ShoppingItem,List<GroceryItem>> shoppingList=ref.watch(shoppingListProvider);
+
+    final List<ShoppingItem> shoppingListTitle=shoppingList.keys.toList();
     
     return Scaffold(
       appBar: AppBar(
@@ -23,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ),
      body: ListView.builder(
       itemCount: shoppingList.length,
-      itemBuilder: (ctx,index)=>ShoppingListItem(title: shoppingListTitle[index],)),
+      itemBuilder: (ctx,index)=>ShoppingListItem(item: shoppingListTitle[index],)),
 
     floatingActionButton: FloatingActionButton(elevation: 0,
     onPressed: (){},
