@@ -14,6 +14,7 @@ class ShoppingListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
+    if (titleController!=null) titleController!.clear();
     if (item.newItemStatus){
       return ListTile(
       contentPadding: const EdgeInsets.symmetric(vertical: 8,horizontal: 10),

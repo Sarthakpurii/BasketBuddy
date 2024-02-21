@@ -22,12 +22,24 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   late final TextEditingController _titleController;
   late final FocusNode fnode;
+  bool isFABvisible=true;
 
   @override
   void initState() {
     super.initState();
     _titleController=TextEditingController();
     fnode=FocusNode();
+
+    fnode.addListener(() {
+      if (fnode.hasFocus) {
+        setState(()=>isFABvisible=false);
+        }
+      else {
+        setState(()=>isFABvisible=true);
+        if(_titleController.text.trim().isEmpty) {ref.read(shoppingListProvider.notifier).removeItem(null);}
+        else {ref.read(shoppingListProvider.notifier).removeItem(_titleController.text.trim());
+      }}
+    });
   }
 
 
@@ -46,16 +58,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       itemBuilder: (ctx,index)=>ShoppingListItem(item: shoppingListTitle[index], titleController: shoppingListTitle[index].newItemStatus ? _titleController : null,
   fnode: shoppingListTitle[index].newItemStatus ? fnode : null,)),
 
-    floatingActionButton: FloatingActionButton(elevation: 0,
+    floatingActionButton: isFABvisible?FloatingActionButton(elevation: 0,
     onPressed: _addShoppingItemToList,
     shape: const CircleBorder(),
-    child: const Icon(Icons.add),),
+    child: const Icon(Icons.add),):null,
     );
   }
 
   @override
   void dispose() {
     _titleController.dispose();
+    fnode.removeListener((){});
     fnode.dispose();
     super.dispose();
   }
