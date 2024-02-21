@@ -14,13 +14,28 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
 
-  // void _addShoppingItemTo
+  void _addShoppingItemToList(){
+    ref.read(shoppingListProvider.notifier).addShoppingItem('', true);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+    fnode.requestFocus();
+  });  }
+
+  late final TextEditingController _titleController;
+  late final FocusNode fnode;
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController=TextEditingController();
+    fnode=FocusNode();
+  }
+
 
   @override
   Widget build(BuildContext context) {
     final Map<ShoppingItem,List<GroceryItem>> shoppingList=ref.watch(shoppingListProvider);
 
-    final List<ShoppingItem> shoppingListTitle=shoppingList.keys.toList();
+    final List<ShoppingItem> shoppingListTitle=shoppingList.keys.toList();    
     
     return Scaffold(
       appBar: AppBar(
@@ -28,12 +43,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     ),
      body: ListView.builder(
       itemCount: shoppingList.length,
-      itemBuilder: (ctx,index)=>ShoppingListItem(item: shoppingListTitle[index],)),
+      itemBuilder: (ctx,index)=>ShoppingListItem(item: shoppingListTitle[index], titleController: shoppingListTitle[index].newItemStatus ? _titleController : null,
+  fnode: shoppingListTitle[index].newItemStatus ? fnode : null,)),
 
     floatingActionButton: FloatingActionButton(elevation: 0,
-    onPressed: (){},
+    onPressed: _addShoppingItemToList,
     shape: const CircleBorder(),
     child: const Icon(Icons.add),),
     );
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    fnode.dispose();
+    super.dispose();
   }
 }

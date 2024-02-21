@@ -3,7 +3,7 @@ import 'package:basketbuddy/models/shopping-item.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ShoppingListNotifier extends StateNotifier<Map<ShoppingItem,List<GroceryItem>>>{
-      ShoppingListNotifier():super({const ShoppingItem(title: 'Morning',newItemStatus: false):[],const ShoppingItem(title: 'Tomorrow',newItemStatus: true):[]});
+      ShoppingListNotifier():super({const ShoppingItem(title: 'Morning',newItemStatus: false):[],const ShoppingItem(title: 'Tomorrow',newItemStatus: false):[]});
 
 
   void addItem(ShoppingItem item,GroceryItem newGroceryItem) async {
@@ -13,6 +13,16 @@ class ShoppingListNotifier extends StateNotifier<Map<ShoppingItem,List<GroceryIt
   void addShoppingItem(String title,bool newItemStatus){
     state={ShoppingItem(title:title,newItemStatus: newItemStatus):[],...state}; 
   }
+
+  void removeItem(String? addItem){
+    var firstKey=state.keys.first;
+    state=Map.from(state)..remove(firstKey);
+
+    if (addItem!=null){
+      addShoppingItem(addItem, false);
+    }
+  }
+
 }
 
 
