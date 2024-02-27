@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "796027664185",
+    "firebase_url": "https://basketbuddy-ef2bd-default-rtdb.firebaseio.com",
+    "project_id": "basketbuddy-ef2bd",
+    "storage_bucket": "basketbuddy-ef2bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:796027664185:android:5cef95f8f521e97e315ae8",
+        "android_client_info": {
+          "package_name": "com.example.basketbuddy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDj5w5AbXDBcoCKzwfRRzA7aaZLxq0TiDY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
